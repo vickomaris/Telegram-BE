@@ -1,18 +1,29 @@
+
 require('dotenv').config()
 // DEKLARE LIBRARY
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const helmet = require('helmet')
+const xss = require('xss-clean')
 
 // BUAT ROUTE
 const userRouter = require('./src/router/user.routes')
 const recipeRouter = require('./src/router/recipe.routes')
+const commentRouter = require('./src/router/comment.routes')
 
 const app = express()
-app.use(bodyParser.json())
-app.use(cors())
-app.use(userRouter)
-app.use(recipeRouter)
+try {
+  app.use(helmet())
+  app.use(bodyParser.json())
+  app.use(xss())
+  app.use(cors())
+  app.use(userRouter)
+  app.use(recipeRouter)
+  app.use(commentRouter)
+} catch (error) {
+  console.log(error)
+}
 
 // jalankan express
 

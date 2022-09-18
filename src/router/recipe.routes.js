@@ -3,7 +3,7 @@ const { list, detail, insert, destroy, update, detailTitle } = require('../contr
 const router = express.Router()
 
 router
-  .get('/recipe', list)
+  .get('/recipe/', list)
   .get('/recipe/:id', detail)
   .post('/recipe/:title', detailTitle)
   .post('/recipe/', insert)

@@ -1,11 +1,12 @@
+/* eslint-disable no-template-curly-in-string */
 
 const db = require('../config/db')
 
 const userModel = {
   // router list
-  selectAll: () => {
+  selectAll: (_limit, _offset) => {
     return new Promise((resolve, reject) => {
-      db.query('SELECT * FROM tb_users', (err, res) => {
+      db.query('SELECT * FROM tb_users LIMIT ${limit} OFFSET ${offset}', (err, res) => {
         if (err) {
           reject(err)
         }

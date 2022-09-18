@@ -48,7 +48,7 @@ const recipeController = {
       .destroy(id)
       .then((result) => {
         res.json({
-          message: 'berhasil dihapus',
+          message: 'success delete data',
           data: result
         })
       }).catch((err) => {

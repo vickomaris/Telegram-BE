@@ -14,7 +14,7 @@ db.connect((err) => {
   if (err) {
     console.log(err)
   } else {
-    console.log('database terhubung')
+    console.log('connected database')
   }
 })
 
