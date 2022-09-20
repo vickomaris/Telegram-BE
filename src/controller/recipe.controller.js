@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const recipeModel = require('../model/recipe.model')
 
 const recipeController = {
@@ -26,17 +27,17 @@ const recipeController = {
     })
   },
   insert: (req, res) => {
-    const { id, photo, title, ingredients, video } = req.body
-    recipeModel.store(id, photo, title, ingredients, video).then((result) => {
+    const { id, photo, title, ingredients, video, created_at } = req.body
+    recipeModel.store(id, photo, title, ingredients, video, created_at).then((result) => {
       res.json(result)
     }).catch((err) => {
       res.json(err)
     })
   },
   update: (req, res) => {
-    const { photo, title, ingredients, video } = req.body
+    const { photo, title, ingredients, video, created_at } = req.body
     const id = req.params.id
-    recipeModel.update(id, photo, title, ingredients, video).then((result) => {
+    recipeModel.update(id, photo, title, ingredients, video, created_at).then((result) => {
       res.json(result)
     }).catch((err) => {
       res.json(err)
