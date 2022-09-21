@@ -1,3 +1,5 @@
+// test remote github mau dirubah db nya
+
 const userModel = require('../model/user.model')
 
 const userController = {
