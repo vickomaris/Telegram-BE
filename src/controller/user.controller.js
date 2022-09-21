@@ -1,6 +1,5 @@
-// test remote github mau dirubah db nya
-
 const userModel = require('../model/user.model')
+const { success, failed } = require('../helper/response')
 
 const userController = {
   list: (req, res) => {
@@ -9,9 +8,9 @@ const userController = {
     const offset = (page - 1) * limit
     userModel.selectAll(limit, offset)
       .then((result) => {
-        res.json(result)
+        success(res, result, 'success', 'get all user success')
       }).catch((err) => {
-        res.json(err)
+        failed(res, err.message, 'failed', 'get all user failed')
       })
   },
   detail: (req, res) => {
@@ -23,17 +22,17 @@ const userController = {
     })
   },
   insert: (req, res) => {
-    const { id, name, email, phone, password } = req.body
-    userModel.store(id, name, email, phone, password).then((result) => {
-      res.json(result)
+    const { username, email, password, phone, photo, level } = req.body
+    userModel.store(username, email, password, phone, photo, level).then((result) => {
+      success(res, null, 'success', 'insert user success')
     }).catch((err) => {
-      res.json(err)
+      failed(res, err.message, 'failed', 'insert user failed')
     })
   },
   update: (req, res) => {
-    const { name, email, phone, password } = req.body
+    const { username, email, password, phone, photo, level } = req.body
     const id = req.params.id
-    userModel.update(id, name, email, phone, password).then((result) => {
+    userModel.update(id, username, email, password, phone, photo, level).then((result) => {
       res.json(result)
     }).catch((err) => {
       res.json(err)

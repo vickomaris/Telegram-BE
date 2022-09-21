@@ -27,6 +27,6 @@ try {
 
 // jalankan express
 
-app.listen(process.env.PORT, () => {
+app.listen(3001, () => {
   console.log('SERVICE RUNNING ON PORT 3001')
 })
