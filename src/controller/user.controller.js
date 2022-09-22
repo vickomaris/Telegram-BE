@@ -31,12 +31,13 @@ const userController = {
     })
   },
   update: (req, res) => {
-    const { username, email, password, phone, photo, level } = req.body
+    const { username, email, password, phone, level } = req.body
     const id = req.params.id
+    const photo = req.file.filename
     userModel.update(id, username, email, password, phone, photo, level).then((result) => {
-      res.json(result)
+      success(res, null, 'success', 'insert user success')
     }).catch((err) => {
-      res.json(err)
+      failed(res, err.message, 'failed', 'insert user failed')
     })
   },
   destroy: (req, res) => {
