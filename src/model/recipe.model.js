@@ -48,7 +48,20 @@ const recipeModel = {
   }),
 
   // router insert
-  store: (title, ingredients, photo, video, created_at) => {
+  // store: (title, ingredients, photo, video, created_at) => {
+  //   return new Promise((resolve, reject) => {
+  //     db.query(`INSERT INTO tb_recipes ( title, ingredients, photo, video, created_at) VALUES ( '${title}', '${ingredients}', '${photo}', '${video}', '${created_at}')`,
+  //       (err, res) => {
+  //         if (err) {
+  //           reject(err)
+  //         }
+  //         resolve(res)
+  //       })
+  //   })
+  // },
+
+  // insert food photo
+  store: ({ title, ingredients, photo, video, created_at }) => {
     return new Promise((resolve, reject) => {
       db.query(`INSERT INTO tb_recipes ( title, ingredients, photo, video, created_at) VALUES ( '${title}', '${ingredients}', '${photo}', '${video}', '${created_at}')`,
         (err, res) => {
@@ -59,6 +72,7 @@ const recipeModel = {
         })
     })
   },
+
   // delete by id
   destroy: (id) => {
     return new Promise((resolve, reject) => {
