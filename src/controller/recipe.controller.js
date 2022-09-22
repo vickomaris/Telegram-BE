@@ -27,8 +27,8 @@ const recipeController = {
     })
   },
   insert: (req, res) => {
-    const { id, photo, title, ingredients, video, created_at } = req.body
-    recipeModel.store(id, photo, title, ingredients, video, created_at).then((result) => {
+    const { title, ingredients, photo, video, created_at } = req.body
+    recipeModel.store(title, ingredients, photo, video, created_at).then((result) => {
       res.json(result)
     }).catch((err) => {
       res.json(err)

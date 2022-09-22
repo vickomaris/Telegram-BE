@@ -6,7 +6,7 @@ const recipeModel = {
   // router list
   selectAll: () => {
     return new Promise((resolve, reject) => {
-      db.query('SELECT * FROM tb_recipes ORDER BY id ASC', (err, res) => {
+      db.query('SELECT * FROM tb_recipes ORDER BY title ASC', (err, res) => {
         if (err) {
           reject(err)
         }
@@ -37,8 +37,8 @@ const recipeModel = {
     })
   },
   // update
-  update: (id, photo, title, ingredients, video, created_at) => new Promise((resolve, reject) => {
-    db.query(`UPDATE tb_recipes SET photo = '${photo}', title = '${title}', ingredients = '${ingredients}', video = '${video}', created_at = '${created_at}' WHERE id = ${id}`, (err, result) => {
+  update: (id, title, ingredients, photo, video, created_at) => new Promise((resolve, reject) => {
+    db.query(`UPDATE tb_recipes SET  title = '${title}', ingredients = '${ingredients}', photo = '${photo}', video = '${video}', created_at = '${created_at}' WHERE id = ${id}`, (err, result) => {
       if (err) {
         reject(err)
       } else {
@@ -48,9 +48,9 @@ const recipeModel = {
   }),
 
   // router insert
-  store: (id, photo, title, ingredients, video, created_at) => {
+  store: (title, ingredients, photo, video, created_at) => {
     return new Promise((resolve, reject) => {
-      db.query(`INSERT INTO tb_recipes (id, photo, title, ingredients, video, created_at) VALUES (${id}, '${photo}', '${title}', '${ingredients}', '${video}', '${created_at}')`,
+      db.query(`INSERT INTO tb_recipes ( title, ingredients, photo, video, created_at) VALUES ( '${title}', '${ingredients}', '${photo}', '${video}', '${created_at}')`,
         (err, res) => {
           if (err) {
             reject(err)

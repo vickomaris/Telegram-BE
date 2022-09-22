@@ -6,8 +6,10 @@ const jwtToken = require('../helper/generateJWT')
 module.exports = {
   register: (req, res) => {
     try {
+      // image
+      const photo = req.file.filename
       // tangkap data dari body
-      const { username, email, password, phone, photo, level } = req.body
+      const { username, email, password, phone, level } = req.body
       bcyrpt.hash(password, 10, (err, hash) => {
         if (err) {
           failed(res, err.message, 'failed', 'fail hash password')

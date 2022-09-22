@@ -11,8 +11,8 @@ const commentController = {
       })
   },
   insert: (req, res) => {
-    const { id, id_user, id_recipe, comments } = req.body
-    commentModel.store(id, id_user, id_recipe, comments).then((result) => {
+    const { id_user, id_recipe, comment, created_at } = req.body
+    commentModel.store(id_user, id_recipe, comment, created_at).then((result) => {
       res.json(result)
     }).catch((err) => {
       res.json(err)

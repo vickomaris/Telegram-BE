@@ -4,7 +4,8 @@ const { register, login } = require('../controller/auth.controller')
 const router = express.Router()
 
 const jwtAuth = require('../middleware/jwtAuth')
-const { isAdmin, isCustomer } = require('../middleware/authorization')
+const { isAdmin } = require('../middleware/authorization')
+const upload = require('../middleware/upload')
 
 router
   .get('/user', jwtAuth, isAdmin, list)
@@ -14,7 +15,7 @@ router
   .delete('/user/:id', destroy)
 
   // register
-  .post('/register', register)
+  .post('/register', upload, register)
   // login
   .post('/login', login)
 

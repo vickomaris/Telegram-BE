@@ -23,6 +23,7 @@ const userController = {
   },
   insert: (req, res) => {
     const { username, email, password, phone, photo, level } = req.body
+    // const photo = req.file.filename
     userModel.store(username, email, password, phone, photo, level).then((result) => {
       success(res, null, 'success', 'insert user success')
     }).catch((err) => {
