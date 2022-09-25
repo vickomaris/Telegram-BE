@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+
 const recipeModel = require('../model/recipe.model')
 const { success, failed } = require('../helper/response')
 
@@ -35,6 +36,7 @@ const recipeController = {
   //     res.json(err)
   //   })
   // },
+
   // insert photo
   insert: (req, res) => {
     try {
@@ -42,6 +44,7 @@ const recipeController = {
       const photo = req.file.filename
       // tangkap data dari body
       const { title, ingredients, video, created_at } = req.body
+
       const data = {
         title, ingredients, photo, video, created_at
       }
@@ -54,6 +57,27 @@ const recipeController = {
       failed(res, err.message, 'failed', 'internal server error')
     }
   },
+
+  // insert: (req, res) => {
+  //   try {
+  //     // image
+  //     const photo = req.files.filename
+  //     // tangkap data dari body
+  //     const { title, ingredients, video, created_at } = req.body
+
+  //     const data = {
+  //       title, ingredients, photo, video, created_at
+  //     }
+
+  //     recipeModel.insert(data).then((result) => {
+  //       success(res, result, 'success', 'upload recipe success')
+  //     }).catch((err) => {
+  //       failed(res, err.message, 'failed', 'upload recipe failed')
+  //     })
+  //   } catch (err) {
+  //     failed(res, err.message, 'failed', 'internal server error')
+  //   }
+  // },
 
   update: (req, res) => {
     const { photo, title, ingredients, video, created_at } = req.body

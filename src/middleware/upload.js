@@ -26,7 +26,7 @@ const multerUpload = multer({
       cb(error, false)
     }
   },
-  limits: { fileSize: 2 * 1024 * 1024 }// 2mb
+  limits: { fileSize: 1 * 1024 * 1024 }// 1mb
 })
 
 // untuk middleware

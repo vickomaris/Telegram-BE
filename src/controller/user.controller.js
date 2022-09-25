@@ -35,9 +35,9 @@ const userController = {
     const id = req.params.id
     const photo = req.file.filename
     userModel.update(id, username, email, password, phone, photo, level).then((result) => {
-      success(res, null, 'success', 'insert user success')
+      success(res, null, 'success', 'update user success')
     }).catch((err) => {
-      failed(res, err.message, 'failed', 'insert user failed')
+      failed(res, err.message, 'failed', 'update user failed')
     })
   },
   destroy: (req, res) => {

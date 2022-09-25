@@ -38,7 +38,13 @@ const recipeModel = {
   },
   // update
   update: (id, title, ingredients, photo, video, created_at) => new Promise((resolve, reject) => {
-    db.query(`UPDATE tb_recipes SET  title = '${title}', ingredients = '${ingredients}', photo = '${photo}', video = '${video}', created_at = '${created_at}' WHERE id = ${id}`, (err, result) => {
+    db.query(`UPDATE tb_recipes SET 
+    title = COALESCE ($1, title), 
+    ingredients = COALESCE ($2, ingredients), 
+    photo = COALESCE ($3, photo), 
+    video = COALESCE ($4, video), 
+    created_at = COALESCE ($5, created_at) WHERE id = $6`,
+    [title, ingredients, photo, video, created_at, id], (err, result) => {
       if (err) {
         reject(err)
       } else {
@@ -50,7 +56,7 @@ const recipeModel = {
   // router insert
   // store: (title, ingredients, photo, video, created_at) => {
   //   return new Promise((resolve, reject) => {
-  //     db.query(`INSERT INTO tb_recipes ( title, ingredients, photo, video, created_at) VALUES ( '${title}', '${ingredients}', '${photo}', '${video}', '${created_at}')`,
+  //     db.query(`INSERT INTO tb_recipes(title, ingredients, photo, video, created_at) VALUES ( '${title}', '${ingredients}', '${photo}', '${video}', '${created_at}')`,
   //       (err, res) => {
   //         if (err) {
   //           reject(err)
@@ -63,7 +69,7 @@ const recipeModel = {
   // insert food photo
   store: ({ title, ingredients, photo, video, created_at }) => {
     return new Promise((resolve, reject) => {
-      db.query(`INSERT INTO tb_recipes ( title, ingredients, photo, video, created_at) VALUES ( '${title}', '${ingredients}', '${photo}', '${video}', '${created_at}')`,
+      db.query(`INSERT INTO tb_recipes ( title, ingredients, photo, video, created_at) VALUES  ('${title}', '${ingredients}', '${photo}', '${video}', '${created_at}')`,
         (err, res) => {
           if (err) {
             reject(err)

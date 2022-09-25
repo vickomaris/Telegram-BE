@@ -44,12 +44,12 @@ module.exports = {
             successWithToken(res, token, 'success', 'login success')
           } else {
             // ketika password salah
-            failed(res, null, 'failed', 'username atau password salah')
+            failed(res, null, 'failed', 'password and username wrong')
           }
         })
       } else {
         // ketika username salah
-        failed(res, null, 'failed', 'username atau password salah')
+        failed(res, null, 'failed', 'password and username wrong')
       }
     }).catch((err) => {
       failed(res, err.message, 'failed', 'internal server error')

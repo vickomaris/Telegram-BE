@@ -1,17 +1,19 @@
-/* eslint-disable camelcase */
+
 const express = require('express')
 const { list, detail, insert, destroy, update, detailTitle } = require('../controller/recipe.controller')
+
 const router = express.Router()
 
-const photo_foods = require('../middleware/photo_food')
+const uploadFoods = require('../middleware/photo_food')
+const deleteFoods = require('../middleware/delete_foodfile')
 
 router
   .get('/recipe/', list)
   .get('/recipe/:id', detail)
+  .post('/recipe/upload', uploadFoods, insert)
+  .post('/recipe', uploadFoods, insert)
   .post('/recipe/:title', detailTitle)
-  .post('/recipe/', insert)
-  .post('/recipe/upload', photo_foods, insert)
-  .put('/recipe/:id', update)
-  .delete('/recipe/:id', destroy)
+  .put('/recipe/:id', deleteFoods, uploadFoods, update)
+  .delete('/recipe/:id', deleteFoods, destroy)
 
 module.exports = router
