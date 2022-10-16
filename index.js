@@ -1,6 +1,7 @@
 
 require('dotenv').config()
 // DEKLARE LIBRARY
+
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
@@ -14,6 +15,8 @@ const commentRouter = require('./src/router/comment.routes')
 
 const app = express()
 try {
+  app.use(express.static('public'))
+  app.use(express.static('photofoods'))
   app.use(helmet())
   app.use(bodyParser.json())
   app.use(xss())

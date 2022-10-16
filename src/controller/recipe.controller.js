@@ -43,10 +43,10 @@ const recipeController = {
       // image
       const photo = req.file.filename
       // tangkap data dari body
-      const { title, ingredients, video, created_at } = req.body
+      const { title, ingredients, video } = req.body
 
       const data = {
-        title, ingredients, photo, video, created_at
+        title, ingredients, photo, video
       }
       recipeModel.store(data).then((result) => {
         success(res, result, 'success', ' success add recipe')
@@ -80,9 +80,10 @@ const recipeController = {
   // },
 
   update: (req, res) => {
-    const { photo, title, ingredients, video, created_at } = req.body
+    const { title, ingredients, video, created_at } = req.body
     const id = req.params.id
-    recipeModel.update(id, photo, title, ingredients, video, created_at).then((result) => {
+    const photo = req.file.filename
+    recipeModel.update(id, title, ingredients, photo, video, created_at).then((result) => {
       res.json(result)
     }).catch((err) => {
       res.json(err)

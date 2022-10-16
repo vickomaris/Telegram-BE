@@ -55,9 +55,9 @@ const userModel = {
     })
   },
   // model register
-  register: ({ username, email, password, phone, photo, level }) => {
+  register: ({ username, email, password, phone, level }) => {
     return new Promise((resolve, reject) => {
-      db.query(`INSERT INTO tb_users (username, email, password, phone, photo, level) VALUES ('${username}', '${email}', '${password}', '${phone}', '${photo}', ${level})`,
+      db.query(`INSERT INTO tb_users (username, email, password, phone, level) VALUES ('${username}', '${email}', '${password}', '${phone}',  ${level})`,
         (err, res) => {
           if (err) {
             reject(err)
@@ -80,9 +80,9 @@ const userModel = {
   },
 
   // model login
-  checkUsername: (username) => {
+  checkUsername: (email) => {
     return new Promise((resolve, reject) => {
-      db.query(`SELECT * FROM tb_users WHERE username='${username}'`, (err, res) => {
+      db.query(`SELECT * FROM tb_users WHERE email='${email}'`, (err, res) => {
         if (err) {
           reject(err)
         }

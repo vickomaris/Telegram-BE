@@ -7,16 +7,16 @@ module.exports = {
   register: (req, res) => {
     try {
       // image
-      const photo = req.file.filename
+      // const photo = req.file.filename
       // tangkap data dari body
-      const { username, email, password, phone, level } = req.body
+      const { username, email, password, phone } = req.body
       bcyrpt.hash(password, 10, (err, hash) => {
         if (err) {
           failed(res, err.message, 'failed', 'fail hash password')
         }
         // console.log(hash)
         const data = {
-          username, email, password: hash, phone, photo, level
+          username, email, password: hash, phone, level: 1
         }
         userModel.register(data).then((result) => {
           success(res, result, 'success', 'register success')
@@ -30,18 +30,18 @@ module.exports = {
   },
 
   login: async (req, res) => {
-    const { username, password } = req.body
-    userModel.checkUsername(username).then((result) => {
+    const { email, password } = req.body
+    userModel.checkUsername(email).then((result) => {
       // console.log(res)
       const user = result.rows[0]
       if (result.rowCount > 0) {
         bcyrpt.compare(password, result.rows[0].password).then(async (result) => {
           if (result) {
             const token = await jwtToken({
-              username: user.username,
+              email: user.email,
               level: user.level
             })
-            successWithToken(res, token, 'success', 'login success')
+            successWithToken(res, { token, data: user }, 'success', 'login success')
           } else {
             // ketika password salah
             failed(res, null, 'failed', 'password and username wrong')
