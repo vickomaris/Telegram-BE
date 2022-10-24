@@ -4,8 +4,23 @@ const recipeModel = require('../model/recipe.model')
 const { success, failed } = require('../helper/response')
 
 const recipeController = {
+  // list: (req, res) => {
+  //   const page = parseInt(req.query.page) || 1
+  //   const limit = parseInt(req.query.limit) || 3
+  //   const offset = (page - 1) * limit
+  //   recipeModel.selectAll(limit, offset)
+  //     .then((result) => {
+  //       res.json(result)
+  //     }).catch((err) => {
+  //       res.json(err)
+  //     })
+  // },
   list: (req, res) => {
-    recipeModel.selectAll()
+    const sort = req.query.sort
+    const page = parseInt(req.query.page) || 1
+    const limit = parseInt(req.query.limit) || 3
+    const offset = (page - 1) * limit
+    recipeModel.selectAll(sort, limit, offset)
       .then((result) => {
         res.json(result)
       }).catch((err) => {
@@ -20,6 +35,7 @@ const recipeController = {
       res.json(err)
     })
   },
+
   detailTitle: (req, res) => {
     const title = req.params.title
     recipeModel.selectDetailTitle(title).then((result) => {
@@ -28,6 +44,17 @@ const recipeController = {
       res.json(err)
     })
   },
+
+  search: async (req, res) => {
+    const title = req.params.title
+    const getRecipes = await recipeModel.selectSearch(title)
+    try {
+      res.json(getRecipes.rows)
+    } catch (err) {
+      res.json(err)
+    }
+  },
+
   // insert: (req, res) => {
   //   const { title, ingredients, photo, video, created_at } = req.body
   //   recipeModel.store(title, ingredients, photo, video, created_at).then((result) => {
