@@ -6,7 +6,7 @@ const path = require('path')
 const multerUpload = multer({
   storage: multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, './public')
+      cb(null, './public/photo_perekrut')
     },
     filename: (req, file, cb) => {
       const ext = path.extname(file.originalname)

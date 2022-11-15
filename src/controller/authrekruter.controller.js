@@ -1,4 +1,4 @@
-const userModel = require('../model/user.model')
+const userModel = require('../model/perekrut.model')
 const { success, failed, successWithToken } = require('../helper/response')
 
 const bcyrpt = require('bcrypt')
@@ -9,7 +9,7 @@ module.exports = {
       // image
       // const image = req.file.filename
       // tangkap data dari body
-      const { username, email, phone, password } = req.body
+      const { username, email, perusahaan, jabatan, phone, password } = req.body
       bcyrpt.hash(password, 10, (err, hash) => {
         if (err) {
           failed(res, err.message, 'failed', 'fail hash password')
@@ -18,6 +18,8 @@ module.exports = {
         const data = {
           username,
           email,
+          perusahaan,
+          jabatan,
           phone,
           password: hash,
           image: req.file ? req.file.filename : 'default.png'

@@ -2,13 +2,13 @@ const fs = require('fs')
 const userModel = require('../model/user.model')
 
 const remove = async (req, res, next) => {
-  const id_user = req.params.id_user
-  const data = await userModel.selectDetail(id_user)
+  const id_perekrut = req.params.id_perekrut
+  const data = await userModel.selectDetail(id_perekrut)
   if (data) {
     if (data.rows[0].image) {
       const img = data.rows[0].image
       if (img !== 'default.png') {
-        fs.unlink(`./public/${img}`, (err) => {
+        fs.unlink(`./public/photo_perekrut/${img}`, (err) => {
           if (err) {
             res.json({
               message: 'delete failed',

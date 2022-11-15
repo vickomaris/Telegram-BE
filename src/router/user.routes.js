@@ -4,16 +4,16 @@ const { register, login } = require('../controller/auth.controller')
 const router = express.Router()
 
 const jwtAuth = require('../middleware/jwtAuth')
-const { isAdmin } = require('../middleware/authorization')
+// const { isAdmin } = require('../middleware/authorization')
 const upload = require('../middleware/upload')
 const deleteFile = require('../middleware/delete_userfile')
 
 router
-  .get('/user', jwtAuth, isAdmin, list)
+  .get('/user', list)
   .get('/user/:id', detail)
   .post('/user/', insert)
-  .put('/user/:id', deleteFile, upload, update)
-  .delete('/user/:id', deleteFile, destroy)
+  .put('/user/:id_user', update)
+  .delete('/user/:id_user', destroy)
 
   // register
   .post('/register', register)

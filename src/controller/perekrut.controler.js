@@ -1,14 +1,12 @@
-const userModel = require('../model/user.model')
+const perekrutModel = require('../model/perekrut.model')
 const { success, failed } = require('../helper/response')
 
-const userController = {
+const perekrutController = {
   list: (req, res) => {
-    const sort = req.query.sort
-    const asc = req.query.asc
     const page = parseInt(req.query.page) || 1
-    const limit = parseInt(req.query.limit) || 5
+    const limit = parseInt(req.query.limit) || 100
     const offset = (page - 1) * limit
-    userModel.selectAll(sort, asc, limit, offset)
+    perekrutModel.selectAll(limit, offset)
       .then((result) => {
         success(res, result, 'success', 'get all user success')
       }).catch((err) => {
@@ -16,37 +14,38 @@ const userController = {
       })
   },
   detail: (req, res) => {
-    const id_user = req.params.id
-    userModel.selectDetail(id_user).then((result) => {
+    const id_perekrut = req.params.id
+    perekrutModel.selectDetail(id_perekrut).then((result) => {
       res.json(result.rows)
     }).catch((err) => {
       res.json(err)
     })
   },
   insert: (req, res) => {
-    const { username, email, phone, password, jobdesk, city, company, description, ig, github, gitlab, image } = req.body
+    const { username, email, perusahaan, jabatan, phone, password } = req.body
     // const photo = req.file.filename
-    userModel.store(username, email, phone, password, jobdesk, city, company, description, ig, github, gitlab, image).then((result) => {
+    perekrutModel.store(username, email, perusahaan, jabatan, phone, password).then((result) => {
       success(res, null, 'success', 'insert user success')
     }).catch((err) => {
       failed(res, err.message, 'failed', 'insert user failed')
     })
   },
   update: (req, res) => {
-    const { username, email, phone, password, jobdesk, city, company, description, ig, github, gitlab, statusjob } = req.body
-    const id_user = req.params.id_user
+    const { username, email, perusahaan, jabatan, phone, password, bidang, kota, deskripsi, instagram, linkedin } = req.body
+    const id_perekrut = req.params.id_perekrut
     // const image = req.file.filename
-    userModel.update(id_user, username, email, phone, password, jobdesk, city, company, description, ig, github, gitlab, statusjob).then((result) => {
+    perekrutModel.update(id_perekrut, username, email, perusahaan, jabatan, phone, password, bidang, kota, deskripsi, instagram, linkedin).then((result) => {
       success(res, null, 'success', 'update user success')
       console.log(res)
+      console.log(username)
     }).catch((err) => {
       failed(res, err.message, 'failed', 'update user failed')
     })
   },
   destroy: (req, res) => {
-    const { id_user } = req.params
-    userModel
-      .destroy(id_user)
+    const { id_perekrut } = req.params
+    perekrutModel
+      .destroy(id_perekrut)
       .then((result) => {
         res.json({
           message: 'success delete data',
@@ -58,4 +57,4 @@ const userController = {
   }
 }
 
-module.exports = userController
+module.exports = perekrutController

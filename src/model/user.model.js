@@ -3,9 +3,9 @@ const db = require('../config/db')
 
 const userModel = {
   // router list
-  selectAll: (limit, offset) => {
+  selectAll: (sort, asc, limit, offset) => {
     return new Promise((resolve, reject) => {
-      db.query(`SELECT * FROM tb_users LIMIT ${limit} OFFSET ${offset}`, (err, res) => {
+      db.query(`SELECT * FROM users ORDER BY ${sort} ${asc} LIMIT ${limit} OFFSET ${offset}`, (err, res) => {
         if (err) {
           reject(err)
         }
@@ -14,9 +14,9 @@ const userModel = {
     })
   },
   // lihat data by id
-  selectDetail: (id) => {
+  selectDetail: (id_user) => {
     return new Promise((resolve, reject) => {
-      db.query(`SELECT * FROM tb_users WHERE id=${id}`, (err, res) => {
+      db.query(`SELECT * FROM users WHERE id_user=${id_user}`, (err, res) => {
         if (err) {
           reject(err)
         }
@@ -25,14 +25,21 @@ const userModel = {
     })
   },
   // update
-  update: (id, username, email, password, phone, photo, level) => new Promise((resolve, reject) => {
-    db.query(`UPDATE tb_users SET username = COALESCE ($1, username), 
+  update: (id_user, username, email, phone, password, jobdesk, city, company, description, ig, github, gitlab, statusjob) => new Promise((resolve, reject) => {
+    db.query(`UPDATE users SET username = COALESCE ($1, username), 
     email = COALESCE ($2, email), 
-    password = COALESCE ($3, password), 
-    phone = COALESCE ($4, phone), 
-    photo = COALESCE ($5, photo), 
-    level = COALESCE ($6, level) WHERE id = $7`,
-    [username, email, password, phone, photo, level, id],
+    phone = COALESCE ($3, phone), 
+    password = COALESCE ($4, password), 
+    jobdesk = COALESCE ($5, jobdesk), 
+    city = COALESCE ($6, city), 
+    company = COALESCE ($7, company), 
+    description = COALESCE ($8, description), 
+    ig = COALESCE ($9, ig), 
+    github = COALESCE ($10, github), 
+    gitlab = COALESCE ($11, gitlab),
+    statusjob = COALESCE ($12, statusjob) 
+    WHERE id_user = $13`,
+    [username, email, phone, password, jobdesk, city, company, description, ig, github, gitlab, statusjob, id_user],
     (err, result) => {
       if (err) {
         reject(err)
@@ -43,9 +50,9 @@ const userModel = {
   }),
 
   // router insert
-  store: (username, email, password, phone, photo, level) => {
+  store: (username, email, phone, password) => {
     return new Promise((resolve, reject) => {
-      db.query(`INSERT INTO tb_users (username, email, password, phone, photo, level) VALUES ('${username}', '${email}', '${password}', '${phone}', '${photo}', ${level})`,
+      db.query(`INSERT INTO users (username, email, phone, password) VALUES ('${username}', '${email}', '${phone}', '${password}')`,
         (err, res) => {
           if (err) {
             reject(err)
@@ -55,9 +62,9 @@ const userModel = {
     })
   },
   // model register
-  register: ({ username, email, password, phone, level }) => {
+  register: ({ username, email, phone, password, image }) => {
     return new Promise((resolve, reject) => {
-      db.query(`INSERT INTO tb_users (username, email, password, phone, level) VALUES ('${username}', '${email}', '${password}', '${phone}',  ${level})`,
+      db.query(`INSERT INTO users (username, email, phone, password, image) VALUES ('${username}', '${email}', '${phone}', '${password}', '${image}')`,
         (err, res) => {
           if (err) {
             reject(err)
@@ -68,9 +75,9 @@ const userModel = {
   },
 
   // delete by id
-  destroy: (id) => {
+  destroy: (id_user) => {
     return new Promise((resolve, reject) => {
-      db.query(`DELETE FROM tb_users WHERE id=${id}`, (err, res) => {
+      db.query(`DELETE FROM users WHERE id_user=${id_user}`, (err, res) => {
         if (err) {
           reject(err)
         }
@@ -82,7 +89,7 @@ const userModel = {
   // model login
   checkUsername: (email) => {
     return new Promise((resolve, reject) => {
-      db.query(`SELECT * FROM tb_users WHERE email='${email}'`, (err, res) => {
+      db.query(`SELECT * FROM users WHERE email='${email}'`, (err, res) => {
         if (err) {
           reject(err)
         }
