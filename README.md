@@ -1,5 +1,5 @@
 
-<h1>Mama Recipe (BE)</h1>
+<h1>Telegram (BE)</h1>
 
 ## Table of contents
 - [About The Project](#about-the-project)
@@ -9,7 +9,7 @@
 - [Contributing](#contributing)
 
 # About The Project
-This is a Back-End FoodRecipe. This is built using Socket.io, Express JS and PostgreSQL.
+This is a Back-End Telegram. This is built using Socket.io, Express JS and PostgreSQL.
 
 ## Technology Used
 - [Socket.io](https://socket.io/)
@@ -46,7 +46,7 @@ Run program with ```npm start```
 
 ## Related Project
 
-RESTful API for this web application, clone this for development Foodtemplate.\
+RESTful API for this web application, clone this for development Telegram.\
 - [Frontend-Telegram](https://github.com/vickomaris/Telegram-FE)
 
 ## Contributing
