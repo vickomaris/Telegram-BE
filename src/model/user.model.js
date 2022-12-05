@@ -3,13 +3,25 @@ const db = require('../config/db')
 
 const userModel = {
   // router list
-  selectAll: (sort, asc, limit, offset) => {
+  // selectLimit: (sort, asc, limit, offset) => {
+  //   return new Promise((resolve, reject) => {
+  //     db.query(`SELECT * FROM users ORDER BY ${sort} ${asc} LIMIT ${limit} OFFSET ${offset}`, (err, res) => {
+  //       if (err) {
+  //         reject(err)
+  //       }
+  //       resolve(res)
+  //     })
+  //   })
+  // },
+
+  selectAll: () => {
     return new Promise((resolve, reject) => {
-      db.query(`SELECT * FROM users ORDER BY ${sort} ${asc} LIMIT ${limit} OFFSET ${offset}`, (err, res) => {
+      db.query('SELECT * FROM users', (err, result) => {
         if (err) {
           reject(err)
+        } else {
+          resolve(result)
         }
-        resolve(res)
       })
     })
   },
@@ -25,22 +37,26 @@ const userModel = {
     })
   },
   // update
-  update: (id_user, username, email, phone, password, jobdesk, city, company, description, ig, github, gitlab, statusjob) => new Promise((resolve, reject) => {
+  update: (id_user, username, email, password, nickname, phone, bio) => new Promise((resolve, reject) => {
     db.query(`UPDATE users SET username = COALESCE ($1, username), 
-    email = COALESCE ($2, email), 
-    phone = COALESCE ($3, phone), 
-    password = COALESCE ($4, password), 
-    jobdesk = COALESCE ($5, jobdesk), 
-    city = COALESCE ($6, city), 
-    company = COALESCE ($7, company), 
-    description = COALESCE ($8, description), 
-    ig = COALESCE ($9, ig), 
-    github = COALESCE ($10, github), 
-    gitlab = COALESCE ($11, gitlab),
-    statusjob = COALESCE ($12, statusjob) 
-    WHERE id_user = $13`,
-    [username, email, phone, password, jobdesk, city, company, description, ig, github, gitlab, statusjob, id_user],
+    email = COALESCE ($2, email),
+    password = COALESCE ($3, password), 
+    nickname = COALESCE ($4, nickname), 
+    phone = COALESCE ($5, phone), 
+    bio = COALESCE ($6, bio)
+    WHERE id_user = $7`,
+    [username, email, password, nickname, phone, bio, id_user],
     (err, result) => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(result)
+      }
+    })
+  }),
+  // update
+  updatePhoto: (id_user, image) => new Promise((resolve, reject) => {
+    db.query(`UPDATE users SET image = '${image}' where id_user = ${id_user}`, (err, result) => {
       if (err) {
         reject(err)
       } else {
@@ -50,9 +66,9 @@ const userModel = {
   }),
 
   // router insert
-  store: (username, email, phone, password) => {
+  store: (username, email, password) => {
     return new Promise((resolve, reject) => {
-      db.query(`INSERT INTO users (username, email, phone, password) VALUES ('${username}', '${email}', '${phone}', '${password}')`,
+      db.query(`INSERT INTO users (username, email,  password) VALUES ('${username}', '${email}', '${password}')`,
         (err, res) => {
           if (err) {
             reject(err)
@@ -62,9 +78,9 @@ const userModel = {
     })
   },
   // model register
-  register: ({ username, email, phone, password, image }) => {
+  register: ({ username, email, password, image }) => {
     return new Promise((resolve, reject) => {
-      db.query(`INSERT INTO users (username, email, phone, password, image) VALUES ('${username}', '${email}', '${phone}', '${password}', '${image}')`,
+      db.query(`INSERT INTO users (username, email, password, image) VALUES ('${username}', '${email}', '${password}', '${image}')`,
         (err, res) => {
           if (err) {
             reject(err)

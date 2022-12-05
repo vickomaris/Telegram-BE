@@ -9,7 +9,7 @@ module.exports = {
       // image
       // const image = req.file.filename
       // tangkap data dari body
-      const { username, email, phone, password } = req.body
+      const { username, email, password } = req.body
       bcyrpt.hash(password, 10, (err, hash) => {
         if (err) {
           failed(res, err.message, 'failed', 'fail hash password')
@@ -18,7 +18,6 @@ module.exports = {
         const data = {
           username,
           email,
-          phone,
           password: hash,
           image: req.file ? req.file.filename : 'default.png'
         }
